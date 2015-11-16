@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <base target="_top">
+
+        <title>Explorable Explanations</title>
+
+        <script type="text/javascript" src="Lib/mootools-core-1.3.1-full-compat-yc.js"></script>
+        <script type="text/javascript" src="Lib/BVTouchable.js"></script>
+        <script type="text/javascript" src="Lib/Tangle.js"></script>
+
+        <script type="text/javascript" src="Script/controls.js"></script>
+        <script type="text/javascript" src="Script/views.js"></script>
+        <script type="text/javascript" src="Script/earthquake.js"></script>
+        <script type="text/javascript" src="Script/main.js"></script>
+
+    </head>
+
+    <body>
+        
+        <div id="everything">
+            
+            <div id="earthquakeExample">
+                
+                <div class="earthquakePlot" style="position:absolute; top:0px; left:274px;">
+		    <canvas class="v_freqPlot a_kf2" width="256" height="128"></canvas>
+		    <div class="c_filterKnob a_kf2"></div>
+		    <div class="filterParams" style="left:5px;top:0px;">
+			<i>EPICENTER DISTANCE<sub>c</sub></i> = <span class="a_ed0 format_freq"></span><br>
+			<i>TRAVEL TIME</i> = <span class="a_tt0 format_p3"></span>
+		    </div>
+		    <!--<div class="filterUnstable v_if a_unstable0">Unstable</div>-->
+		</div>
+            </div>
+        </div>
+    </body>
+</html>
