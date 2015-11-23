@@ -26,16 +26,20 @@
         ctx.fillStyle = "#fff";
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-        ctx.fillStyle = "#ddd";
+        ctx.fillStyle = "#bbb";
+        var labelBuffer = 2;
         // add vertical grid lines
         for (var x = 0; x <= canvasWidth; x += X_GRID * canvasWidth / TIME_SCALE) {
             ctx.fillRect(x, 0, 1, canvasHeight);
+            ctx.font = "12px Arial";
+            ctx.fillText("" + x, x + labelBuffer, canvasHeight - labelBuffer);
         }
         // add horizontal grid lines
         for (var y = canvasHeight; y >= 0; y -= Y_GRID * canvasHeight / TIME_SCALE) {
             ctx.fillRect(0, y - 1, canvasWidth, 1);
+            ctx.font = "12px Arial";
+            ctx.fillText("" + y, 0 + labelBuffer, canvasHeight - y - labelBuffer);
         }
-        
 
         // TODO move as input
         var testTime = 3;
