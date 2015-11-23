@@ -136,7 +136,7 @@
         var ctx = el.getContext("2d");
         
         //var time = worksheet.getValue("simTime");
-        var time = 350;
+        var time = 200;
 
         var vp = 2.0;
         var vs = 1.0;
