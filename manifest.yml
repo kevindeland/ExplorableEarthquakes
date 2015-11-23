@@ -1,0 +1,7 @@
+applications:
+- name: ExplorableEarthquakes
+  memory: 512M
+  host: ExplorableEarthquakes
+  instances: 1
+  buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
+  stack: cflinuxfs2
