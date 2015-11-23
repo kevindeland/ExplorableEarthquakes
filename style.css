@@ -282,6 +282,10 @@ a:hover   { text-decoration:underline; }
 //    border-bottom:1px solid #222;
 }
 
+.waveSim canvas {
+    border:1px solid #ddd;
+}
+
 .filterUnstable {
     position:absolute;
     left:13px;

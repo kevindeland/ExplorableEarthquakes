@@ -72,7 +72,8 @@
                 }
                 
                 // green
-                ctx.fillStyle = isLinedUp ? "#286" : "#F00";
+                ctx.fillStyle = isLinedUp ? "rgb(32, 128, 96)" : "rgb(255, 0, 0)";
+//                ctx.fillStyle = isLinedUp ? "#286" : "#F00";
                 ctx.fillRect(sliderX - thickness, canvasHeight - yP - testTimeTranslated, thickness, testTimeTranslated);
                 
             }
@@ -117,6 +118,114 @@
     Tangle.views.v_wavePlot.getTimeForY = function(y, canvasHeight) {
         return y / canvasHeight * TIME_SCALE;
     };
-    
 
+
+    var GROUND_WIDTH = 100;
+    var GROUND_HEIGHT = 30;
+    
+    // for simulating waves
+    Tangle.views.v_waveSim = function (value, el, worksheet) {
+
+//        console.log('6 - waveSim');
+
+        // get wave-type specified in html class name
+        var waveType = el.className.split(' ')[1][2];
+//        console.log(waveType);
+        var canvasWidth = el.get("width");
+        var canvasHeight = el.get("height");
+        var ctx = el.getContext("2d");
+        
+        //var time = worksheet.getValue("simTime");
+        var time = 350;
+
+        var vp = 2.0;
+        var vs = 1.0;
+        
+        var dp = vp * time;
+        var ds = vs * time;
+        
+        // clear canvas
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        //
+        var defaultGroundColor = arguments.callee.buildColor(0);
+        
+        // draw ground
+        var buffer = 20;
+        var groundWidth  = canvasWidth - 2 * buffer;
+        var ratio = 1 / 10;
+        var groundHeight = groundWidth * ratio;
+
+        var wavelength = 80;
+        var amplitude = 10;
+
+        // drawing points
+        var x0 = buffer;
+        var xFinal = canvasWidth - buffer;
+        var y0 = canvasHeight/2 - groundHeight/2;
+
+        // draw ground incrementally
+        for(var x = x0; x <= xFinal; x++) {
+            if(waveType == 's' && x < ds && x > ds - wavelength) {
+                ctx.fillStyle = defaultGroundColor;
+                var y = y0 - amplitude * Math.sin(Math.PI * 2 * (x - ds) / wavelength);
+                ctx.fillRect(x, y, 1, groundHeight);
+            } else if (waveType == 'p' && x < dp && x > dp - wavelength) {
+                var colorMultiplier = Math.sin(Math.PI * 2 * (x - dp) / wavelength);
+                console.log(colorMultiplier);
+                ctx.fillStyle = arguments.callee.buildColor(colorMultiplier);
+                ctx.fillRect(x, y0, 1, groundHeight);
+            } else { // default
+                ctx.fillStyle = defaultGroundColor;//"rgb(128, 255, 128)";
+                ctx.fillRect(x, y0, 1, groundHeight);
+            }
+            
+        }
+        
+        // sensor info
+        var sensorX = 300;
+        var sensorY = y0 + groundHeight / 2;
+        if(waveType == 's' && sensorX < ds && sensorX > ds - wavelength) {
+            sensorY -= amplitude * Math.sin(Math.PI * 2 * (sensorX - ds) / wavelength) ;
+        } else {
+            
+        }
+        var sensorRadius = 5;
+        var sensorColor = "#222";
+        ctx.fillStyle = sensorColor;
+        ctx.beginPath();
+        ctx.arc(sensorX, sensorY, sensorRadius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fill();
+        
+//        ctx.fillStyle = "rgb(128, 128, 128)";
+//        ctx.fillRect(buffer, canvasHeight/2 - groundHeight/2, groundWidth, groundHeight);
+        
+        ctx.lineStyle = "#000";
+        ctx.rect(buffer, canvasHeight/2 - groundHeight/2, groundWidth, groundHeight);
+        ctx.stroke();
+
+    };
+
+    // pressure ranges from -1 to 1
+    Tangle.views.v_waveSim.buildColor = function(pressure) {
+        var R = {min: 96, max: 128};
+        var G = {min: 128, max: 256};
+        var B = {min: 96, max: 128};
+
+        function colorEval (pressure, color) {
+            return Math.floor((color.max + color.min) / 2 + pressure * (color.max - color.min) / 2);
+        }
+        var r = colorEval(pressure, R);
+        var g = colorEval(pressure, G);
+        var b = colorEval(pressure, B);
+                
+        var string = "rgb(" + r + ", " + g + ", " +  b + ")";
+        console.log(string);
+        return string;
+    };
+
+    
+    
 })();

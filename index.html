@@ -28,17 +28,27 @@
 
             <p>The two types of waves you need to know are <b>P-waves</b> and <b>S-waves</b>. Their behavior is necessary to calculate the epicenter (location) of an earthquake.</p>
 
-            <h4>P-waves</h4>
-            <ul>
-                <li>Travel faster than S-waves</li>
-            </ul>
 
-            <h4>S-waves</h4>
-            <ul>
-                <li>Travel slower than S-waves</li>
-            </ul>
-            
             <div id="earthquakeExample">
+
+                <div class="waveSim">
+                    <p><h4>P-waves</h4>
+                    <ul>
+                        <li>Travel faster than S-waves</li>
+                    </ul></p>
+
+                    <canvas class="v_waveSim a_pwSim" width="512" height="128"></canvas>
+                    
+                    <h4>S-waves</h4>
+                    <ul>
+                        <li>Travel slower than P-waves</li>
+                    </ul>
+
+                    <canvas class="v_waveSim a_swSim" width="512" height="128"></canvas>
+
+                    <div class="c_waveSimKnob a_simTime"></div>
+                </div>
+                
                 <h4>Locating an Earthquake Epicenter</h4>
 
                 <p>Below is an interactive example of how to calculate the epicenter distance based on two times.</p>
@@ -55,7 +65,7 @@
                     <b>T<sub>d</sub> = <span class="a_td"></span> seconds</b>
                 </p>
                 <p>(note that as you adjust the values, the slider on the graph changes length)</p>
-                <p>Drag the slider until the indicator turns green.</p>
+                <p><em>Drag the slider to determine the distance at which the time difference betweent the two waves equals <b>T<sub>d</sub> = <span class="a_td"></span> seconds</b> (the indicator will turn green).</em></p>
 
                 <div class="earthquakeIndent" style="position:relative;">
                     <div class="earthquakePlot" >

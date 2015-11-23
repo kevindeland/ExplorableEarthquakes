@@ -141,6 +141,13 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
     
 };
 
+Tangle.controls.c_waveSimKnob = function(el, worksheet) {
+
+    var tParam = "simTime";
+    var tBounds = {min: 0, max: 100};
+    
+};
+
 
 Tangle.controls.c_adjustableNumber = function(el, worksheet) {
     var bounds = getBounds();
