@@ -20,12 +20,14 @@ function initEarthquakeExample (tangle) {
         update: function(model) {
             console.log('4 - update earthquake model');
 
-            model.dmx++;
-            model.ed0++;
+            console.log(model);
+            console.log('model.edo: ' + model.edo); 
+//            model.dmx++;
+//            model.ed0++;
 
             model['kf2'] = 'hello';
             
-            console.log('5 - done updating earthquake model' ,model.dmx);
+            console.log('5 - done updating earthquake model');
             
         }
     };

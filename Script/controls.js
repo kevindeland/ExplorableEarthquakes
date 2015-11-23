@@ -2,7 +2,7 @@
 //  c_filterParams.js
 
 
-Tangle.controls.c_filterKnob = function(el, worksheet) {
+Tangle.controls.c_xKnob = function(el, worksheet) {
     console.log('2 - in wave knob');
     
     var name = worksheet.getVariableName(el);
@@ -49,10 +49,14 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
     // TODO why is this not being called?
     worksheet.setView(el, function () {
         console.log('7 - setting view');
+
+        var dist = worksheet.getValue(xParameter);
+        console.log(dist);
         // set knob X and Y values
-        //knobX = 10;
-        knobX++;
-        knobY++; //knobY = 10;
+        knobX = Math.round(Tangle.views.v_wavePlot.getXForDistance(dist, canvasWidth));
+        console.log(knobX);;
+        //        knobX++;
+        knobY = 10;
         knobEl.setStyles( { left: knobX - knobWidth/2, top: knobY - knobHeight/2 } );
         lineEl.setStyles( { left: knobX });
 
@@ -111,15 +115,14 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
 //            console.log(worksheet.getValue(xParameter));
             
             var newX = knobXAtMouseDown + touches.translation.x;
-            var dist = Tangle.views.v_freqPlot.getDistanceForX(newX, canvasWidth) * xBounds.max;
+            var dist = Tangle.views.v_wavePlot.getDistanceForX(newX, canvasWidth);// * xBounds.max;
 
+            obj[xParameter] =  dist.limit(xBounds.min, xBounds.max);
+            console.log('setting ' + xParameter + ' to ' + obj[xParameter]);
             
-            obj[xParameter] =  10;//dist.limit(xBounds.min, xBounds.max);
-
-
             var newY = knobYAtMouseDown - touches.translation.y;
             var tt = getTTForY(newY);
-            obj[yParameter] = 10;//tt.limit(yBounds.min, yBounds.max);
+//            obj[yParameter] = 10;//tt.limit(yBounds.min, yBounds.max);
 
             //console.log(newX + ' ' + newY);
             console.log(obj);

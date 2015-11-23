@@ -2,6 +2,11 @@
 
 Playing with the example listed [here](http://worrydream.com/ExplorableExplanations)
 
+### Running locally
+```bash
+http-server -p 8333
+```
+use browser to visit [localhost:8333](http://localhost:8333)
 
 ### Important Files
 
