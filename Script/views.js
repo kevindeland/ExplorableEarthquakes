@@ -22,7 +22,7 @@
         ctx.fillStyle = "#fff";
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-        // TODO move externally
+        // TODO move as input
         var testTime = 3;
         
         
@@ -37,8 +37,18 @@
                 var timeP = Math.sqrt(dist);
                 var yP = timeP / 16 * canvasHeight;
                 var testTimeTranslated = testTime / 16 * canvasHeight;
+
+                // determine if user guess is accurate
+                var tolerance = 0.05;
+                var isLinedUp = false;
+                var timeP = arguments.callee.getPWaveFunction(dist);
+                var timeS = arguments.callee.getSWaveFunction(dist);
+                if (timeP + testTime >=  timeS - tolerance && timeP + testTime <= timeS + tolerance) {
+                    isLinedUp = true;
+                }
                 
-                ctx.fillStyle = "#286";
+                // green
+                ctx.fillStyle = isLinedUp ? "#286" : "#F00";
                 ctx.fillRect(sliderX - thickness, canvasHeight - yP - testTimeTranslated, thickness, testTimeTranslated);
                 
             }
@@ -46,8 +56,8 @@
             // only draw up to cursor
             if(dist > xVal) return;
             
-            var timeP = Math.sqrt(dist);
-            var timeS = 2 * Math.sqrt(dist);
+            var timeP = arguments.callee.getPWaveFunction(dist);
+            var timeS = arguments.callee.getSWaveFunction(dist);
 
             var yP = timeP / 16 * canvasHeight;
             var yS = timeS / 16 * canvasHeight;
@@ -61,9 +71,15 @@
             ctx.fillRect(x, canvasHeight - yP - thickness, 1, thickness);
             
         }
-
-        
             
+    };
+
+    Tangle.views.v_wavePlot.getPWaveFunction = function(dist, time) {
+        return Math.sqrt(dist);
+    };
+
+    Tangle.views.v_wavePlot.getSWaveFunction = function(dist, time) {
+        return 2 * Math.sqrt(dist);
     };
 
     Tangle.views.v_wavePlot.getDistanceForX = function(x, canvasWidth) {
