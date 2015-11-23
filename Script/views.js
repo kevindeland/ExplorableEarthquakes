@@ -4,12 +4,13 @@
 (function() {
     
     var TIME_SCALE = 16;
+    var DIST_SCALE = 16;
     var X_GRID = 2;
     var Y_GRID = 2;
     
     Tangle.views.v_wavePlot = function (value, el, worksheet) {
             
-        console.log('6 - wavePlot');
+//        console.log('6 - wavePlot');
         var canvasWidth = el.get("width");
         var canvasHeight = el.get("height");
         var ctx = el.getContext("2d");
@@ -17,7 +18,7 @@
 //        console.log('views:' + worksheet);
 
         var xVal = worksheet.getValue("ed0");
-        console.log('xVal:', xVal);
+//        console.log('xVal:', xVal);
 
         ctx.fillStyle = "#f00";
         var randX = Math.floor(Math.random() * canvasWidth);
@@ -29,24 +30,28 @@
         ctx.fillStyle = "#bbb";
         var labelBuffer = 2;
         // add vertical grid lines
-        for (var x = 0; x <= canvasWidth; x += X_GRID * canvasWidth / TIME_SCALE) {
+        for (var x = 0; x <= canvasWidth; x += X_GRID * canvasWidth / DIST_SCALE) {
             ctx.fillRect(x, 0, 1, canvasHeight);
             ctx.font = "12px Arial";
-            ctx.fillText("" + x, x + labelBuffer, canvasHeight - labelBuffer);
+            var val = arguments.callee.getDistanceForX(x, canvasWidth);
+            ctx.fillText("" + val, x + labelBuffer, canvasHeight - labelBuffer);
         }
+        // last line
+        ctx.fillRect(canvasWidth - 1, 0, canvasWidth, canvasHeight);
+        
         // add horizontal grid lines
         for (var y = canvasHeight; y >= 0; y -= Y_GRID * canvasHeight / TIME_SCALE) {
             ctx.fillRect(0, y - 1, canvasWidth, 1);
             ctx.font = "12px Arial";
-            ctx.fillText("" + y, 0 + labelBuffer, canvasHeight - y - labelBuffer);
+            var val = arguments.callee.getTimeForY(y, canvasHeight);
+            ctx.fillText("" + val, 0 + labelBuffer, canvasHeight - y - labelBuffer);
         }
+        ctx.fillRect(0, 0, canvasWidth, 1);
 
         // TODO move as input
         var testTime = 3;
         
-        
         for (var x = 0; x < canvasWidth; x++) {
-            
             
             var dist = arguments.callee.getDistanceForX(x, canvasWidth);
             if(Math.round(dist) == Math.round(xVal)) {
@@ -102,11 +107,15 @@
     };
 
     Tangle.views.v_wavePlot.getDistanceForX = function(x, canvasWidth) {
-        return x/canvasWidth * TIME_SCALE;
+        return x/canvasWidth * DIST_SCALE;
     };
     
     Tangle.views.v_wavePlot.getXForDistance = function(distance, canvasWidth) {
-        return distance / TIME_SCALE * canvasWidth;
+        return distance / DIST_SCALE * canvasWidth;
+    };
+
+    Tangle.views.v_wavePlot.getTimeForY = function(y, canvasHeight) {
+        return y / canvasHeight * TIME_SCALE;
     };
     
 
