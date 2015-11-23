@@ -49,7 +49,7 @@
         ctx.fillRect(0, 0, canvasWidth, 1);
 
         // TODO move as input
-        var testTime = 3;
+        var timeDiff = worksheet.getValue("td");
         
         for (var x = 0; x < canvasWidth; x++) {
             
@@ -60,14 +60,14 @@
 
                 var timeP = Math.sqrt(dist);
                 var yP = timeP / TIME_SCALE * canvasHeight;
-                var testTimeTranslated = testTime / TIME_SCALE * canvasHeight;
+                var testTimeTranslated = timeDiff / TIME_SCALE * canvasHeight;
 
                 // determine if user guess is accurate
                 var tolerance = 0.05;
                 var isLinedUp = false;
                 var timeP = arguments.callee.getPWaveFunction(dist);
                 var timeS = arguments.callee.getSWaveFunction(dist);
-                if (timeP + testTime >=  timeS - tolerance && timeP + testTime <= timeS + tolerance) {
+                if (timeP + timeDiff >=  timeS - tolerance && timeP + timeDiff <= timeS + tolerance) {
                     isLinedUp = true;
                 }
                 

@@ -3,7 +3,7 @@
 
 
 Tangle.controls.c_xKnob = function(el, worksheet) {
-    console.log('2 - in wave knob');
+//    console.log('2 - in wave knob');
     
     var name = worksheet.getVariableName(el);
 
@@ -48,13 +48,13 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
     knobY = 10;
     // TODO why is this not being called?
     worksheet.setView(el, function () {
-        console.log('7 - setting view');
+//        console.log('7 - setting view');
 
         var dist = worksheet.getValue(xParameter);
-        console.log(dist);
+//        console.log(dist);
         // set knob X and Y values
         knobX = Math.round(Tangle.views.v_wavePlot.getXForDistance(dist, canvasWidth));
-        console.log(knobX);;
+//        console.log(knobX);;
         //        knobX++;
         knobY = 10;
         knobEl.setStyles( { left: knobX - knobWidth/2, top: knobY - knobHeight/2 } );
@@ -102,7 +102,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
 
             knobXAtMouseDown = knobX;
             knobYAtMouseDown = knobY;
-            console.log('touched down at ', knobX, ',', knobY);
+//            console.log('touched down at ', knobX, ',', knobY);
             isDragging = true;
             didDrag = true;
             knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnobDrag.png");
@@ -118,15 +118,15 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
             var dist = Tangle.views.v_wavePlot.getDistanceForX(newX, canvasWidth);// * xBounds.max;
 
             obj[xParameter] =  dist.limit(xBounds.min, xBounds.max);
-            console.log('setting ' + xParameter + ' to ' + obj[xParameter]);
+//            console.log('setting ' + xParameter + ' to ' + obj[xParameter]);
             
             var newY = knobYAtMouseDown - touches.translation.y;
             var tt = getTTForY(newY);
 //            obj[yParameter] = 10;//tt.limit(yBounds.min, yBounds.max);
 
             //console.log(newX + ' ' + newY);
-            console.log(obj);
-            console.log(worksheet);
+//            console.log(obj);
+//            console.log(worksheet);
             worksheet.setValues(obj);
         },
 
@@ -140,3 +140,97 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
         
     
 };
+
+
+Tangle.controls.c_adjustableNumber = function(el, worksheet) {
+    var bounds = getBounds();
+    console.log(bounds);
+    var container = worksheet.element;
+
+    // cursor
+    var isHovering = false;
+
+    el.addEvent("mouseenter", function () { isHovering = true;   updateRolloverEffects(); });
+    el.addEvent("mouseleave", function () { isHovering = false;  updateRolloverEffects(); });
+
+    function updateRolloverEffects () {
+        updateColor();
+        updateCursor();
+        updateHelp();
+    }
+
+    function isActive () {
+        return isDragging || (isHovering && !isAnyAdjustableNumberDragging);
+    }
+
+    function updateColor () {
+        if (isActive()) { el.addClass("c_adjustableNumberHover"); }
+        else { el.removeClass("c_adjustableNumberHover"); }
+    }
+
+    function updateCursor () {
+        var body = document.getElement("body");
+        if (isActive()) { body.addClass("cursorDragHorizontal"); }
+        else { body.removeClass("cursorDragHorizontal"); }
+    }
+
+
+    // help
+
+    var help   = (new Element("div", { "class": "adjustableNumberHelp" })).inject(container, "top");
+    help.setStyle("display", "none");
+    help.set("text", "drag");
+
+    function updateHelp () {
+        var position = el.getPosition(container);
+        var size = el.getSize();
+        position.y -= size.y - 4;
+        position.x += Math.round(0.5 * (size.x - 20));
+        help.setPosition(position);
+        help.setStyle("display", (isHovering && !isAnyAdjustableNumberDragging) ? "block" : "none");
+    }
+
+    // drag
+
+    var isDragging = false;
+    var valueAtMouseDown;
+
+    new BVTouchable(el, {
+
+        touchDidGoDown: function (touches) {
+            valueAtMouseDown = worksheet.getValue(el);
+            isDragging = true;
+            isAnyAdjustableNumberDragging = true;
+            updateRolloverEffects();
+        },
+
+        touchDidMove: function (touches) {
+            var value = valueAtMouseDown + touches.translation.x / 5 * bounds.step;
+            value = ((value / bounds.step).round() * bounds.step).limit(bounds.min, bounds.max);
+            worksheet.setValue(el, value);
+            updateHelp();
+        },
+
+        touchDidGoUp: function (touches) {
+            help.setStyle("display", "none");
+            isDragging = false;
+            isAnyAdjustableNumberDragging = false;
+            updateRolloverEffects();
+        }
+    });
+    
+    function getBounds () {
+        var bounds = { min:1, max:10, step:1 };
+        var prefix = "bounds_";
+
+        el.className.split(" ").each( function(className) {
+            if (className.indexOf(prefix) != 0) { return; }
+            var parts = className.split("_");
+            bounds.min = parts[1].replace("-",".").toFloat();
+            bounds.max = parts[2].replace("-",".").toFloat();
+            if (parts[3]) { bounds.step = parts[3].replace("-",".").toFloat(); }
+        });
+
+        return bounds;
+    }
+}
