@@ -45,7 +45,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
     console.log(worksheet);
     console.log(worksheet.setView);
  */   knobX = 10;
-    knobY = 10;
+    knobY = 8;
     // TODO why is this not being called?
     worksheet.setView(el, function () {
 //        console.log('7 - setting view');
@@ -56,7 +56,11 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
         knobX = Math.round(Tangle.views.v_wavePlot.getXForDistance(dist, canvasWidth));
 //        console.log(knobX);;
         //        knobX++;
-        knobY = 10;
+        var time = worksheet.getValue(yParameter);
+
+        knobY = canvasHeight - Tangle.views.v_wavePlot.getYForTime(time, canvasHeight);
+        console.log('time', time);
+        
         knobEl.setStyles( { left: knobX - knobWidth/2, top: knobY - knobHeight/2 } );
         lineEl.setStyles( { left: knobX });
 
@@ -118,6 +122,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
             var dist = Tangle.views.v_wavePlot.getDistanceForX(newX, canvasWidth);// * xBounds.max;
 
             obj[xParameter] =  dist.limit(xBounds.min, xBounds.max);
+            obj[yParameter] = Math.sqrt(dist);
 //            console.log('setting ' + xParameter + ' to ' + obj[xParameter]);
             
             var newY = knobYAtMouseDown - touches.translation.y;
