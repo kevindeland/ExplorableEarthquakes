@@ -76,7 +76,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
     knobEl.addEvent("mouseenter", function () {
         isHovering = true; updateRolloverEffects();
     });
-    knobEl.addEvent("mouseenter", function () {
+    knobEl.addEvent("mouseleave", function () {
         isHovering = false; updateRolloverEffects();
     });
 
@@ -145,7 +145,8 @@ Tangle.controls.c_waveSimKnob = function(el, worksheet) {
 
     var tParam = "simTime";
     var tBounds = {min: 0, max: 100};
-    
+
+
 };
 
 
