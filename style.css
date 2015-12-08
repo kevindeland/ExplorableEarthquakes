@@ -227,7 +227,7 @@ a:hover   { text-decoration:underline; }
 .earthquakeIndent {
     position:relative;
     margin-left: 40px;
-    margin-bottom:25px;
+    margin-bottom:60px;
 }
 
 .filterDynamicLabel {
@@ -276,10 +276,37 @@ a:hover   { text-decoration:underline; }
 
 .earthquakePlot canvas {
     position:relative;
+    top: 20px;
     width:512px;
     height:256px;
     //    border-left:1px solid #222;
 //    border-bottom:1px solid #222;
+}
+
+.earthquakePlot .labels .title {
+    position: absolute;
+    left: 100px;
+    top: 0px;
+    font-weight: bold;
+        //    text-transform: uppercase;
+}
+
+.earthquakePlot .labels .x_label {
+    position: absolute;
+    left: 144px;
+    top: 276px;
+    //    text-transform: uppercase;
+}
+
+.earthquakePlot .labels .y_label {
+    position: absolute;
+    left: -80px;
+    top: 128px;
+    -ms-transform: rotate(-90deg); /* IE 9 */
+    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    transform: rotate(-90deg);
+//    font-weight: bold;
+//    text-transform: uppercase;
 }
 
 .waveSim canvas {

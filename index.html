@@ -40,8 +40,6 @@
                         <li>Travel through solids, liquids, and gases.</li>
                     </ul></p>
 
-                    <canvas class="v_waveSim a_pwSim" width="512" height="128"></canvas>
-                    
                     <h4>S-waves (Secondary waves)</h4>
                     <ul>
                         <li>Travel slower than P-waves, and arrive at seismic stations second.</li>
@@ -49,12 +47,34 @@
                         <li>Travel only through solids.</li>
                     </ul>
 
-                    <canvas class="v_waveSim a_swSim" width="512" height="128"></canvas>
+                    <div id="simulations">
+                        <canvas class="v_waveSim a_pwSim" width="512" height="128"></canvas>
+                        <canvas class="v_waveSim a_swSim" width="512" height="128"></canvas>
+                        <canvas class="v_simTime a_simTime" width="512" height="32"></canvas>
+                        <p>Move the slider to the right to simulate the travel of the wave.</p>
+                        <div class="c_waveSimKnob a_simTime"></div>
+                    </div>
+                    
+                    <p><h2>Or to put it another way....</h2></p>
+                    <p><h4>You're a sensor just sitting in the ground, waiting for an earthquake like</h4></p>
+                    <img src="img/waiting-sponge.gif" height="200" width="275">
+                    <p><h4>then a P-wave comes along and you're like</h4></p>
+                    <img src="img/orange-ladies.gif">
+                    
+                    <p><h4>now you know there's an S-wave coming up next so you're all</h4></p>
+                    <img src="img/excited-sponge.gif" height="200" width="275">
+                    
+                    <p><h4>then the S-wave hits you like</h4></p>
+                    <img src="img/yolandi.gif">
 
-                    <div class="c_waveSimKnob a_simTime"></div>
+                    <p><h4>okay, fun's over</h4></p>
+                    <img src="img/waiting-sponge.gif" height="200" width="275">
+                    
+
                 </div>
-                
-                <h4>Locating an Earthquake Epicenter</h4>
+
+                <br>
+                <h2>Locating an Earthquake Epicenter</h2>
 
                 <p>Below is an interactive example of how to calculate the epicenter distance based on P-wave and S-wave arrival times.</p>
 
@@ -70,16 +90,21 @@
                     <b>T<sub>d</sub> = <span class="a_td"></span> seconds</b>
                 </p>
                 <p>(note that as you adjust the values, the slider on the graph changes length)</p>
-                <p><em>Drag the slider to determine the distance at which the time difference betweent the two waves equals <b>T<sub>d</sub> = <span class="a_td"></span> seconds</b> (the indicator will turn green).</em></p>
+                <p><em>Drag the slider to determine the distance at which the time difference betweent the two waves equals <b>T<sub>d</sub> = <span class="a_td"></span> seconds</b> (the line between the wave graphs will turn green).</em></p>
 
                 <div class="earthquakeIndent" style="position:relative;">
                     <div class="earthquakePlot" >
-		        <canvas class="v_wavePlot a_kf2" width="512" height="256"></canvas>
+                        <canvas class="v_wavePlot a_kf2" width="512" height="256"></canvas>
 		        <div class="c_xKnob a_kf2"></div>
-		        <div class="filterParams" style="left:5px;top:0px;">
+		        <div class="filterParams" style="left:5px;top:20px;">
 			    <i>EPICENTER DISTANCE<sub>c</sub></i> = <span class="a_ed0 format_freq"></span><br>
 			    <i>TRAVEL TIME</i> = <span class="a_tt0 format_p3"></span>
 		        </div>
+                        <div class="labels">
+                            <div class="title">EARTHQUAKE P-WAVE AND S-WAVE TRAVEL TIME</div>
+                            <div class="y_label">TRAVEL TIME (mins)</div>
+                            <div class="x_label">EPICENTER DISTANCE (10<sup>3</sup>km)</div>
+                        </div>
 		        <!--<div class="filterUnstable v_if a_unstable0">Unstable</div>-->
                     </div>
 		</div>

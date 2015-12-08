@@ -8,7 +8,6 @@ function initEarthquakeExample (tangle) {
     var script = {
         initialize: function(model) {
             
-
             // for calcaulating epicenter
             model.tp = 12;
             model.ts = 14;
@@ -25,15 +24,16 @@ function initEarthquakeExample (tangle) {
 
         update: function(model) {
 //            console.log('4 - update earthquake model');
-
+            console.log('updating');
             // first update adjustable numbers
+            
             model.td = model.ts - model.tp;
 //            console.log(model);
 //            console.log('model.edo: ' + model.edo); 
 //            model.dmx++;
 //            model.ed0++;
-
-            model['pwSim'] = 'hello';
+            
+            model['pwSim'] = Date.now() / 1000;
             model['swSim'] = 'hello';
             
             model['kf2'] = 'hello';

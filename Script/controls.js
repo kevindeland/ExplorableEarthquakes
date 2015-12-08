@@ -26,7 +26,7 @@ Tangle.controls.c_xKnob = function(el, worksheet) {
     var canvasWidth = canvasEl.get("width");
     var canvasHeight = canvasEl.get("height");
 
-    var lineStyle = "position:absolute; display:block; border-left:1px dotted #00f; pointer-events:none; width:1px; h\
+    var lineStyle = "position:absolute; display:block; border-left:1px dotted #00f; pointer-events:none; top:20px; width:1px; h\
 eight:" + canvasHeight + "px;";
     var lineEl = new Element("div", { style:lineStyle });
     el.grab(lineEl, "bottom");

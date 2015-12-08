@@ -7,6 +7,9 @@
     var DIST_SCALE = 16;
     var X_GRID = 2;
     var Y_GRID = 2;
+
+    var P_WAVE_COLOR = "#444";
+    var S_WAVE_COLOR = "#888";
     
     Tangle.views.v_wavePlot = function (value, el, worksheet) {
             
@@ -50,7 +53,28 @@
 
         // TODO move as input
         var timeDiff = worksheet.getValue("td");
+
+
+        var thickness = 2;
+
+        // draw legend
+        var legendLineThickness = 4;
+        var legendCoords = {x: {min: 380, max: 480}, y: {min: 10, max: 70}};
+        ctx.fillStyle = "#EEE";
+        ctx.lineStyle = "#222";
+        ctx.rect(380, 20, 80, 50);
+        ctx.stroke();
+        ctx.fill();
+
+        ctx.fillStyle = P_WAVE_COLOR;
+        ctx.fillRect(legendCoords.x.min + 5, legendCoords.y.min + 25, 10, thickness);
+        ctx.fillStyle = S_WAVE_COLOR;
+        ctx.fillRect(legendCoords.x.min + 5, legendCoords.y.min + 45, 10, thickness);
+        ctx.fillStyle = "#000";
+        ctx.fillText("P-wave", legendCoords.x.min + 25, legendCoords.y.min + 30);
+        ctx.fillText("S-wave", legendCoords.x.min + 25, legendCoords.y.min + 50);
         
+                
         for (var x = 0; x < canvasWidth; x++) {
             
             var dist = arguments.callee.getDistanceForX(x, canvasWidth);
@@ -63,10 +87,16 @@
                 var testTimeTranslated = timeDiff / TIME_SCALE * canvasHeight;
 
                 // determine if user guess is accurate
-                var tolerance = 0.05;
+                var tolerance = 0.025;
                 var isLinedUp = false;
                 var timeP = arguments.callee.getPWaveFunction(dist);
                 var timeS = arguments.callee.getSWaveFunction(dist);
+
+                var correctDist = arguments.callee.solveForDistance(timeDiff);
+                console.log('correctDist: ' + correctDist);
+                var exactPixelToHighlight = Math.ceil(arguments.callee.getXForDistance(correctDist, canvasWidth));
+                console.log('this pixel: ' + x + '; exact pixel ' + exactPixelToHighlight);
+//                if (x == exactPixelToHighlight) {
                 if (timeP + timeDiff >=  timeS - tolerance && timeP + timeDiff <= timeS + tolerance) {
                     isLinedUp = true;
                 }
@@ -88,23 +118,30 @@
             var yS = timeS / TIME_SCALE * canvasHeight;
             var thickness = 2;        
             // draw secondary line
-            ctx.fillStyle = "#444";
+            ctx.fillStyle = S_WAVE_COLOR;
             ctx.fillRect(x, canvasHeight - yS - thickness, 1, thickness);
 
             // draw primary line
-            ctx.fillStyle = "#888";
+            ctx.fillStyle = P_WAVE_COLOR;
             ctx.fillRect(x, canvasHeight - yP - thickness, 1, thickness);
             
         }
             
     };
 
-    Tangle.views.v_wavePlot.getPWaveFunction = function(dist, time) {
+    // Tp = p(d) = sqrt(d)
+    Tangle.views.v_wavePlot.getPWaveFunction = function(dist) {
         return Math.sqrt(dist);
     };
-
-    Tangle.views.v_wavePlot.getSWaveFunction = function(dist, time) {
+    // Ts = s(d) = 2*sqrt(d)
+    Tangle.views.v_wavePlot.getSWaveFunction = function(dist) {
         return 2 * Math.sqrt(dist);
+    };
+    // inverse of the above two
+    // Td = s(d) - p(d) = 2sqrt(d) - sqrt(d) = sqrt(d)
+    // d = Td^2
+    Tangle.views.v_wavePlot.solveForDistance = function(timeDiff) {
+        return timeDiff * timeDiff;
     };
 
     Tangle.views.v_wavePlot.getDistanceForX = function(x, canvasWidth) {
@@ -117,6 +154,10 @@
 
     Tangle.views.v_wavePlot.getTimeForY = function(y, canvasHeight) {
         return y / canvasHeight * TIME_SCALE;
+    };
+
+    Tangle.views.v_wavePlot.getYForTime = function(time, canvasHeight) {
+        return time / TIME_SCALE * canvasHeight;
     };
 
 
@@ -136,7 +177,8 @@
         var ctx = el.getContext("2d");
         
         //var time = worksheet.getValue("simTime");
-        var time = 200;
+        var t0 = 0;
+        var time = (Date.now() / 1000 ) % 200 * 2;
 
         var vp = 2.0;
         var vs = 1.0;
@@ -184,7 +226,7 @@
         }
         
         // sensor info
-        var sensorX = 300;
+        var sensorX = 220;
         var sensorY = y0 + groundHeight / 2;
         if(waveType == 's' && sensorX < ds && sensorX > ds - wavelength) {
             sensorY -= amplitude * Math.sin(Math.PI * 2 * (sensorX - ds) / wavelength) ;
@@ -206,6 +248,8 @@
         ctx.rect(buffer, canvasHeight/2 - groundHeight/2, groundWidth, groundHeight);
         ctx.stroke();
 
+
+        
     };
 
     // pressure ranges from -1 to 1
