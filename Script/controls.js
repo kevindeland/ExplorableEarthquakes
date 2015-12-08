@@ -8,10 +8,10 @@ Tangle.controls.c_xKnob = function(el, worksheet) {
     var name = worksheet.getVariableName(el);
 
     var xParameter = "ed0";
-    var xBounds = { min:0, max:16 };
+    var xBounds = { min:0, max:10 };
 
     var yParameter = "tt0"
-    var yBounds = { min:0, max:8 };
+    var yBounds = { min:0, max:24 };
 
 
     function getTTForY (y) {
@@ -44,8 +44,8 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
     console.log(el);
     console.log(worksheet);
     console.log(worksheet.setView);
- */   knobX = 10;
-    knobY = 8;
+ */   knobX = 0;
+    knobY = 0;
     // TODO why is this not being called?
     worksheet.setView(el, function () {
 //        console.log('7 - setting view');
@@ -53,12 +53,12 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
         var dist = worksheet.getValue(xParameter);
 //        console.log(dist);
         // set knob X and Y values
-        knobX = Math.round(Tangle.views.v_wavePlot.getXForDistance(dist, canvasWidth));
+        knobX = (Tangle.views.v_wavePlot.getXForDistance(dist, canvasWidth));
 //        console.log(knobX);;
         //        knobX++;
         var time = worksheet.getValue(yParameter);
 
-        knobY = canvasHeight - Tangle.views.v_wavePlot.getYForTime(time, canvasHeight);
+        knobY = 20;//canvasHeight - Tangle.views.v_wavePlot.getYForTime(time, canvasHeight);
         console.log('time', time);
         
         knobEl.setStyles( { left: knobX - knobWidth/2, top: knobY - knobHeight/2 } );
@@ -122,7 +122,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
             var dist = Tangle.views.v_wavePlot.getDistanceForX(newX, canvasWidth);// * xBounds.max;
 
             obj[xParameter] =  dist.limit(xBounds.min, xBounds.max);
-            obj[yParameter] = Math.sqrt(dist);
+            obj[yParameter] = 15;//Math.sqrt(dist);
 //            console.log('setting ' + xParameter + ' to ' + obj[xParameter]);
             
             var newY = knobYAtMouseDown - touches.translation.y;

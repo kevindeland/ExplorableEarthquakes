@@ -87,11 +87,11 @@
                 var isLinedUp = false;
                 var timeP = arguments.callee.getPWaveFunction(dist);
                 var timeS = arguments.callee.getSWaveFunction(dist);
-
+                
                 var correctDist = arguments.callee.solveForDistance(timeDiff);
-                console.log('correctDist: ' + correctDist);
+//                console.log('correctDist: ' + correctDist);
                 var exactPixelToHighlight = Math.ceil(arguments.callee.getXForDistance(correctDist, canvasWidth));
-                console.log('this pixel: ' + x + '; exact pixel ' + exactPixelToHighlight);
+//                console.log('this pixel: ' + x + '; exact pixel ' + exactPixelToHighlight);
 //                if (x == exactPixelToHighlight) {
                 if (timeP + timeDiff >=  timeS - tolerance && timeP + timeDiff <= timeS + tolerance) {
                     isLinedUp = true;

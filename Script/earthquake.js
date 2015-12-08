@@ -13,8 +13,8 @@ function initEarthquakeExample (tangle) {
             model.ts = 14;
             model.td = model.ts - model.tp;
             
-            model.ed0 = 4;
-            model.tt0 = 4;
+            model.ed0 = 0;
+            model.tt0 = 0;
             model.dmx = 0;
             
 //            console.log('3 - init earthquake model');
