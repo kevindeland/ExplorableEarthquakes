@@ -5,8 +5,8 @@
     
     var TIME_SCALE = 24;
     var DIST_SCALE = 10;
-    var X_GRID = 1;
-    var Y_GRID = 2;
+    var X_GRID = 0.5;
+    var Y_GRID = 1;
 
     var P_WAVE_COLOR = "#444";
     var S_WAVE_COLOR = "#888";
@@ -29,11 +29,14 @@
         ctx.fillStyle = "#bbb";
         var labelBuffer = 2;
         // add vertical grid lines
+        var even = false; // only label every other
         for (var x = 0; x <= canvasWidth; x += X_GRID * canvasWidth / DIST_SCALE) {
+            even = !even;
             ctx.fillRect(x, 0, 1, canvasHeight);
             ctx.font = "12px Arial";
-            var val = Math.round(arguments.callee.getDistanceForX(x, canvasWidth));
-            ctx.fillText("" + val, x + labelBuffer, canvasHeight - labelBuffer);
+            var val = Math.round(arguments.callee.getDistanceForX(x, canvasWidth) * 2) / 2;
+            if(even)
+                ctx.fillText("" + val, x + labelBuffer, canvasHeight - labelBuffer);
         }
         // last line
         ctx.fillRect(canvasWidth - 1, 0, canvasWidth, canvasHeight);
