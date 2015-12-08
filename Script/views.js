@@ -3,9 +3,9 @@
 
 (function() {
     
-    var TIME_SCALE = 16;
-    var DIST_SCALE = 16;
-    var X_GRID = 2;
+    var TIME_SCALE = 24;
+    var DIST_SCALE = 10;
+    var X_GRID = 1;
     var Y_GRID = 2;
 
     var P_WAVE_COLOR = "#444";
@@ -23,10 +23,6 @@
         var xVal = worksheet.getValue("ed0");
 //        console.log('xVal:', xVal);
 
-        ctx.fillStyle = "#f00";
-        var randX = Math.floor(Math.random() * canvasWidth);
-        //        ctx.fillRect(0, 0, randX, 10);
-
         ctx.fillStyle = "#fff";
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
@@ -36,7 +32,7 @@
         for (var x = 0; x <= canvasWidth; x += X_GRID * canvasWidth / DIST_SCALE) {
             ctx.fillRect(x, 0, 1, canvasHeight);
             ctx.font = "12px Arial";
-            var val = arguments.callee.getDistanceForX(x, canvasWidth);
+            var val = Math.round(arguments.callee.getDistanceForX(x, canvasWidth));
             ctx.fillText("" + val, x + labelBuffer, canvasHeight - labelBuffer);
         }
         // last line
@@ -46,7 +42,7 @@
         for (var y = canvasHeight; y >= 0; y -= Y_GRID * canvasHeight / TIME_SCALE) {
             ctx.fillRect(0, y - 1, canvasWidth, 1);
             ctx.font = "12px Arial";
-            var val = arguments.callee.getTimeForY(y, canvasHeight);
+            var val = Math.round(arguments.callee.getTimeForY(y, canvasHeight));
             ctx.fillText("" + val, 0 + labelBuffer, canvasHeight - y - labelBuffer);
         }
         ctx.fillRect(0, 0, canvasWidth, 1);
@@ -82,7 +78,7 @@
                 var sliderX = arguments.callee.getXForDistance(xVal, canvasWidth);
                 var thickness = 2;
 
-                var timeP = Math.sqrt(dist);
+//                var timeP = Math.sqrt(dist);
                 var yP = timeP / TIME_SCALE * canvasHeight;
                 var testTimeTranslated = timeDiff / TIME_SCALE * canvasHeight;
 
@@ -131,11 +127,15 @@
 
     // Tp = p(d) = sqrt(d)
     Tangle.views.v_wavePlot.getPWaveFunction = function(dist) {
-        return Math.sqrt(dist);
+        //        return Math.sqrt(dist);
+        // used WolframAlpha to get "quadratic fit (0,0), (2,4) (4,7), (6, 9.5), (8, 11.3), (10, 13)"
+        return (-0.0727679 * dist * dist) + (2.00482 * dist);// + 0.110714;
     };
     // Ts = s(d) = 2*sqrt(d)
     Tangle.views.v_wavePlot.getSWaveFunction = function(dist) {
-        return 2 * Math.sqrt(dist);
+        //        return 2 * Math.sqrt(dist);
+        // used WolframAlpha to get "quadratic fit (0,0), (1,4), (3, 10), (5,15), (6,17), (9, 22.3), (10, 23)"
+        return (-0.135248 * dist * dist) + (3.64334 * dist); // + 0.215587
     };
     // inverse of the above two
     // Td = s(d) - p(d) = 2sqrt(d) - sqrt(d) = sqrt(d)
