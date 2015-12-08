@@ -42,11 +42,15 @@
         ctx.fillRect(canvasWidth - 1, 0, canvasWidth, canvasHeight);
         
         // add horizontal grid lines
+        even = true;
         for (var y = canvasHeight; y >= 0; y -= Y_GRID * canvasHeight / TIME_SCALE) {
+
             ctx.fillRect(0, y - 1, canvasWidth, 1);
             ctx.font = "12px Arial";
             var val = Math.round(arguments.callee.getTimeForY(y, canvasHeight));
-            ctx.fillText("" + val, 0 + labelBuffer, canvasHeight - y - labelBuffer);
+            if(even)
+                ctx.fillText("" + val, 0 + labelBuffer, canvasHeight - y - labelBuffer);
+            even = !even;
         }
         ctx.fillRect(0, 0, canvasWidth, 1);
 
