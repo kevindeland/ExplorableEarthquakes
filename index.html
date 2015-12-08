@@ -46,33 +46,7 @@
                         <li>Side-to-side, or shear waves.</li>
                         <li>Travel only through solids.</li>
                     </ul>
-
-                    <div id="simulations">
-                        <canvas class="v_waveSim a_pwSim" width="512" height="128"></canvas>
-                        <canvas class="v_waveSim a_swSim" width="512" height="128"></canvas>
-                        <canvas class="v_simTime a_simTime" width="512" height="32"></canvas>
-                        <p>Move the slider to the right to simulate the travel of the wave.</p>
-                        <div class="c_waveSimKnob a_simTime"></div>
-                    </div>
                     
-                    <p><h2>Or to put it another way....</h2></p>
-                    <p><h4>You're a sensor just sitting in the ground, waiting for an earthquake like</h4></p>
-                    <img src="img/waiting-sponge.gif" height="200" width="275">
-                    <p><h4>then a P-wave comes along and you're like</h4></p>
-                    <!--                    <img src="img/orange-ladies.gif">-->
-                    <img src="img/1449601602774.gif">
-                    
-                    <p><h4>now you know there's an S-wave coming up next so you're all</h4></p>
-                    <img src="img/excited-sponge.gif" height="200" width="275">
-                    
-                    <p><h4>then the S-wave hits you like</h4></p>
-                    <img src="img/1449601675868.gif">
-                    <!-- <img src="img/yolandi.gif"> -->
-
-                    <p><h4>okay, fun's over</h4></p>
-                    <img src="img/waiting-sponge.gif" height="200" width="275">
-                    
-
                 </div>
 
                 <br>
@@ -81,18 +55,19 @@
                 <p>Below is an interactive example of how to calculate the epicenter distance based on P-wave and S-wave arrival times.</p>
 
                 <p>How long did it take the P-wave to reach the point?
-                    <b>T<sub>p</sub> = <span class="a_tp c_adjustableNumber bounds_0_50"></span> seconds</b>
+                    <b>P-wave Travel Time<!--T<sub>p</sub>--> = <span class="a_tp c_adjustableNumber bounds_0_50"></span> minutes</b>
                 </p>
                 
                 <p>How long did it take the S-wave to reach the point?
-                    <b>T<sub>s</sub> = <span class="a_ts c_adjustableNumber bounds_0_50"></span> seconds</b>
+                    <!-- TODO use angular to make this change based on understanding level -->
+                    <b>S-wave Travel Time<!--T<sub>s</sub>--> = <span class="a_ts c_adjustableNumber bounds_0_50"></span> minutes</b>
                 </p>
 
                 <p>This means the difference in time was
-                    <b>T<sub>d</sub> = <span class="a_td"></span> seconds</b>
+                    <b>Difference<!--T<sub>d</sub>--> = <span class="a_td"></span> minutes</b><div class="inst">drag left and right to change time</div>
                 </p>
                 <p>(note that as you adjust the values, the slider on the graph changes length)</p>
-                <p><em>Drag the slider at the top of the graph to determine the distance at which the time difference betweent the two waves equals <b>T<sub>d</sub> = <span class="a_td"></span> seconds</b> (the line between the wave graphs will turn green).</em></p>
+                <p><em>Drag the slider at the top of the graph to determine the distance at which the time difference betweent the two waves equals <!--<b>T<sub>d</sub> = --><b><span class="a_td"></span> minutes</b> (the line between the wave graphs will turn green).</em></p>
 
                 <div class="earthquakeIndent" style="position:relative;">
                     <div class="earthquakePlot" >
