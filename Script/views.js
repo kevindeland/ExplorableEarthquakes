@@ -2,6 +2,10 @@
 
 
 (function() {
+
+    Tangle.formatters.format_dist = function (value) {
+        return "" + 1000 * value.round(3) + " km";
+    };
     
     var TIME_SCALE = 24.0;
     var DIST_SCALE = 10;
