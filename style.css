@@ -321,8 +321,9 @@ a:hover   { text-decoration:underline; }
 }
 
 .filterParams {
-    position:absolute;
+    position:relative;
     color: #00f;
+    left: 40;
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 6px;

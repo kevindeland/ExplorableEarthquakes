@@ -38,6 +38,12 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
 
     el.grab(knobEl, "bottom");
 
+    // initialize help knob
+    var helpEl = new Element("div", { "class": "c_filterKnobHelp" });
+    helpEl.set("text", "drag");
+    el.grab(helpEl, "bottom");
+
+
     var knobX, knobY;
 
 /*    console.log('el');
@@ -63,13 +69,18 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
         
         knobEl.setStyles( { left: knobX - knobWidth/2, top: knobY - knobHeight/2 } );
         lineEl.setStyles( { left: knobX });
-
+        helpEl.setStyles( { left: knobX - knobWidth/2 - 22, top: knobY - knobHeight/2 + 8 } );
     });
 
     // rollover effects
 
+
+    // 
+    knobEl.setStyle("display", "block");
+    helpEl.setStyle("display", "block");
     var isShowing = false;
     var isHovering = false;
+
 
     canvasEl.addEvent("mouseenter", function () {
         isShowing = true; updateRolloverEffects();
@@ -87,7 +98,8 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
     function updateRolloverEffects () {
         updateCursor();
         var isShowingKnob = (isShowing || isHovering || isDragging);
-        knobEl.setStyle("display", isShowingKnob ? "block" : "none");
+        //        knobEl.setStyle("display", isShowingKnob ? "block" : "none");
+        helpEl.setStyle("display", (!didDrag || !isDragging) ? "block": "none");
     }
 
     function updateCursor() {
