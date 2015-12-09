@@ -13,7 +13,9 @@
     var Y_GRID = 1;
 
     var P_WAVE_COLOR = "#444";
+    var P_WAVE_LITE = "#666";
     var S_WAVE_COLOR = "#888";
+    var S_WAVE_LITE = "#CCC";
     
     Tangle.views.v_wavePlot = function (value, el, worksheet) {
             
@@ -125,21 +127,21 @@
             }
             
                         // only draw up to cursor
-// TODO uncomment            if(dist > xVal) return;
+//            if(dist > xVal) break;
 
             var timeP = arguments.callee.getPWaveFunction(dist);
             var timeS = arguments.callee.getSWaveFunction(dist);
 
             var yP = timeP / TIME_SCALE * canvasHeight;
             var yS = timeS / TIME_SCALE * canvasHeight;
-            var thickness = 2;        
+            var thickness = (xVal >= dist) ?  4 : 1;        
             // draw secondary line
-            ctx.fillStyle = S_WAVE_COLOR;
-            ctx.fillRect(x, canvasHeight - yS - thickness, 1, thickness);
+            ctx.fillStyle = (xVal >= dist) ? S_WAVE_COLOR : S_WAVE_LITE;
+            ctx.fillRect(x, canvasHeight - yS - thickness/2, 1, thickness);
 
             // draw primary line
-            ctx.fillStyle = P_WAVE_COLOR;
-            ctx.fillRect(x, canvasHeight - yP - thickness, 1, thickness);
+            ctx.fillStyle = (xVal >= dist) ? P_WAVE_COLOR : P_WAVE_LITE;
+            ctx.fillRect(x, canvasHeight - yP - thickness/2, 1, thickness);
             
         }
 
