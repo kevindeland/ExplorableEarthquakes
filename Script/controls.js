@@ -46,7 +46,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
     console.log(worksheet.setView);
  */   knobX = 0;
     knobY = 0;
-    // TODO why is this not being called?
+
     worksheet.setView(el, function () {
 //        console.log('7 - setting view');
 

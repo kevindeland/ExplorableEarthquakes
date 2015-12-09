@@ -3,7 +3,7 @@
 
 (function() {
     
-    var TIME_SCALE = 24;
+    var TIME_SCALE = 24.0;
     var DIST_SCALE = 10;
     var X_GRID = 0.5;
     var Y_GRID = 1;
@@ -81,9 +81,12 @@
         for (var x = 0; x < canvasWidth; x++) {
             
             var dist = arguments.callee.getDistanceForX(x, canvasWidth);
-            if(Math.round(dist) == Math.round(xVal)) {
+            
+            if(false && (Math.round(dist * 10) / 10) == (Math.round(xVal * 10) / 10)) {
+///                console.log('rounded: ' + Math.round(dist) + ',' + Math.round(xVal));
+                //                console.log('drawing line at ' + dist + ' and ' + xVal);
                 var sliderX = arguments.callee.getXForDistance(xVal, canvasWidth);
-                var thickness = 2;
+                var thickness = 4;
 
 //                var timeP = Math.sqrt(dist);
                 var yP = timeP / TIME_SCALE * canvasHeight;
@@ -94,6 +97,8 @@
                 var isLinedUp = false;
                 var timeP = arguments.callee.getPWaveFunction(dist);
                 var timeS = arguments.callee.getSWaveFunction(dist);
+
+                var yP = arguments.callee.getYForTime(timeP, canvasHeight);
                 
                 var correctDist = arguments.callee.solveForDistance(timeDiff);
 //                console.log('correctDist: ' + correctDist);
@@ -106,14 +111,18 @@
                 
                 // green
                 ctx.fillStyle = isLinedUp ? "rgb(32, 128, 96)" : "rgb(255, 0, 0)";
-//                ctx.fillStyle = isLinedUp ? "#286" : "#F00";
-                ctx.fillRect(sliderX - thickness, canvasHeight - yP - testTimeTranslated, thickness, testTimeTranslated);
+                //                ctx.fillStyle = isLinedUp ? "#286" : "#F00";
+//                testTimeTranslated = 40;
+                var topOfLine = canvasHeight - yP - testTimeTranslated;// - yP - testTimeTranslated;
+//                console.log(testTimeTranslated);
+//                console.log(yP);
+                ctx.fillRect(sliderX - thickness / 2, topOfLine, thickness, testTimeTranslated);
                 
             }
             
-            // only draw up to cursor
-            if(dist > xVal) return;
-            
+                        // only draw up to cursor
+// TODO uncomment            if(dist > xVal) return;
+
             var timeP = arguments.callee.getPWaveFunction(dist);
             var timeS = arguments.callee.getSWaveFunction(dist);
 
@@ -129,6 +138,30 @@
             ctx.fillRect(x, canvasHeight - yP - thickness, 1, thickness);
             
         }
+
+        // draw slider line
+        console.log('distance:', xVal);
+        // x value on canvas
+        var xCanvas = arguments.callee.getXForDistance(xVal, canvasWidth);
+        // time vars
+        var timeP = arguments.callee.getPWaveFunction(xVal);
+        var timeS = arguments.callee.getSWaveFunction(xVal);
+        var td = timeS - timeP;
+        
+        var yP  = arguments.callee.getYForTime(timeP, canvasHeight);
+        var yS =  arguments.callee.getYForTime(timeS, canvasHeight);
+        
+        var testTimeTranslated = timeDiff / TIME_SCALE * canvasHeight;
+
+        var thickness = 4;
+        var tolerance = 0.1;
+        if (timeP + timeDiff >= timeS - tolerance && timeP + timeDiff <= timeS + tolerance) {
+            ctx.fillStyle = "rgb(32, 128, 96)";
+        } else {
+            ctx.fillStyle = "rgb(255, 0, 0)";
+        }
+        ctx.fillRect(xCanvas - thickness/2, canvasHeight - yP - testTimeTranslated, thickness, testTimeTranslated);
+        
             
     };
 
