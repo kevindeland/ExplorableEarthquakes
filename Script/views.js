@@ -158,7 +158,7 @@
         var yS =  arguments.callee.getYForTime(timeS, canvasHeight);
         
         var testTimeTranslated = timeDiff / TIME_SCALE * canvasHeight;
-
+        
         var thickness = 4;
         var tolerance = 0.1;
         if (timeP + timeDiff >= timeS - tolerance && timeP + timeDiff <= timeS + tolerance) {
@@ -217,17 +217,22 @@
 
         // get wave-type specified in html class name
         var waveType = el.className.split(' ')[1][2];
-//        console.log(waveType);
+//      sli  console.log(waveType);
         var canvasWidth = el.get("width");
         var canvasHeight = el.get("height");
         var ctx = el.getContext("2d");
         
         //var time = worksheet.getValue("simTime");
         var t0 = 0;
-        var time = (Date.now() / 1000 ) % 200 * 2;
+//        var time = (Date.now() / 1000 ) % 200 * 2;
+
+        var pos = worksheet.getValue("sliderTime");
+        
+        console.log('the simulated time is: ' + pos);
+        var time = pos;
 
         var vp = 2.0;
-        var vs = 1.0;
+        var vs = 0.8;
         
         var dp = vp * time;
         var ds = vs * time;
@@ -261,7 +266,6 @@
                 ctx.fillRect(x, y, 1, groundHeight);
             } else if (waveType == 'p' && x < dp && x > dp - wavelength) {
                 var colorMultiplier = Math.sin(Math.PI * 2 * (x - dp) / wavelength);
-                console.log(colorMultiplier);
                 ctx.fillStyle = arguments.callee.buildColor(colorMultiplier);
                 ctx.fillRect(x, y0, 1, groundHeight);
             } else { // default
@@ -276,8 +280,8 @@
         var sensorY = y0 + groundHeight / 2;
         if(waveType == 's' && sensorX < ds && sensorX > ds - wavelength) {
             sensorY -= amplitude * Math.sin(Math.PI * 2 * (sensorX - ds) / wavelength) ;
-        } else {
-            
+        } else if(waveType == 'p' && sensorX < dp && sensorX > dp - wavelength) {
+            sensorX -= amplitude * Math.sin(Math.PI * 2 * (sensorX - dp) / wavelength);
         }
         var sensorRadius = 5;
         var sensorColor = "#222";
@@ -312,9 +316,27 @@
         var b = colorEval(pressure, B);
                 
         var string = "rgb(" + r + ", " + g + ", " +  b + ")";
-        console.log(string);
+        
         return string;
     };
+
+    Tangle.views.v_slider = function (value, el, worksheet) {
+
+        // get canvas info from el
+        var canvasWidth = el.get("width");
+        var canvasHeight = el.get("height");
+        var ctx = el.getContext("2d");
+
+        // start with a fresh canvas
+        ctx.fillStyle = "#efe";
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        // get the new position
+        var pos = worksheet.getValue("sliderTime");
+        
+        ctx.fillStyle = "#77a";
+        ctx.fillRect(0, 0, pos, canvasHeight);
+    }
 
     
     

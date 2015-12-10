@@ -16,7 +16,8 @@ function initEarthquakeExample (tangle) {
             model.ed0 = 0;
             model.tt0 = 0;
             model.dmx = 0;
-            
+
+            model.sliderTime = 0;
 //            console.log('3 - init earthquake model');
 //            console.log(model);
             
@@ -37,7 +38,8 @@ function initEarthquakeExample (tangle) {
             model['swSim'] = 'hello';
             
             model['kf2'] = 'hello';
-            
+
+            console.log(model.pos);
 //            console.log('5 - done updating earthquake model');
             
         }

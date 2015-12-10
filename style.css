@@ -230,6 +230,10 @@ a:hover   { text-decoration:underline; }
     margin-bottom:60px;
 }
 
+.waveSimIndent {
+    position: relative;
+}
+
 .filterDynamicLabel {
     position:absolute;
     width:40px;
