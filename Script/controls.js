@@ -46,11 +46,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
 
     var knobX, knobY;
 
-/*    console.log('el');
-    console.log(el);
-    console.log(worksheet);
-    console.log(worksheet.setView);
- */   knobX = 0;
+   knobX = 0;
     knobY = 0;
 
     worksheet.setView(el, function () {
@@ -128,6 +124,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
         touchDidMove: function (touches) {
             var obj = { };
 
+            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnob.png");
 //            console.log(worksheet.getValue(xParameter));
             
             var newX = knobXAtMouseDown + touches.translation.x;
@@ -179,6 +176,7 @@ Tangle.controls.c_sliderKnob = function(el, worksheet) {
     // add line to page
     el.grab(lineEl, "bottom");
 
+
     // initialize knob
     var knobStyle = "position:absolute; display:none; ";
     var knobWidth = 36, knobHeight = 36;
@@ -191,6 +189,12 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
     knobX = 0;
     knobY = 0;
 
+    // initialize help knob
+    var helpEl = new Element("div", { "class": "c_filterKnobHelp" });
+    helpEl.set("text", "drag");
+    el.grab(helpEl, "bottom");
+
+
     
     worksheet.setView(el, function() {
 
@@ -202,6 +206,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
 
         knobEl.setStyles( { left: knobX - knobWidth/2, top: knobY - knobHeight/2 });
         lineEl.setStyles( { left: knobX } );
+        helpEl.setStyles( { left: knobX - knobWidth/2 - 22, top: knobY - knobHeight/2 + 8 } );
         
     });
 
@@ -225,12 +230,15 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
         isHovering = false; updateRolloverEffects();
     });
 
-
+    // always showing
+    knobEl.setStyle("display", "block");
+    
     function updateRolloverEffects () {
         updateCursor();
         var isShowingKnob = true;// TODO(isShowing || isHovering || isDragging);
         // TODO  here is where you would make line pulse
         knobEl.setStyle("display", isShowingKnob ? "block" : "none");
+        helpEl.setStyle("display", (!didDrag || !isDragging) ? "block": "none");
     }
     
     function updateCursor() {
@@ -259,7 +267,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
         touchDidMove: function (touches) {
             
             var obj = { };
-            
+            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnob.png");
             var newX = knobXAtMouseDown + touches.translation.x;
             // set new x
             obj[parameter] = newX;
@@ -267,8 +275,10 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
         },
 
         touchDidGoUp: function (touches) {
+            
             isDragging = false;
             updateRolloverEffects();
+            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnob.png");
         }
     });
     
@@ -331,6 +341,7 @@ Tangle.controls.c_adjustableNumber = function(el, worksheet) {
 
         touchDidGoDown: function (touches) {
             valueAtMouseDown = worksheet.getValue(el);
+            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnobDrag.png");
             isDragging = true;
             isAnyAdjustableNumberDragging = true;
             updateRolloverEffects();
