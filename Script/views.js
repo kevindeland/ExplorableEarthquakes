@@ -295,7 +295,7 @@
 //        ctx.fillRect(buffer, canvasHeight/2 - groundHeight/2, groundWidth, groundHeight);
         
         ctx.lineStyle = "#000";
-        ctx.rect(buffer, canvasHeight/2 - groundHeight/2, groundWidth, groundHeight);
+//        ctx.rect(buffer, canvasHeight/2 - groundHeight/2, groundWidth, groundHeight);
         ctx.stroke();
 
 

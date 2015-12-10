@@ -194,7 +194,8 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
     helpEl.set("text", "drag");
     el.grab(helpEl, "bottom");
 
-
+    // default show
+    knobEl.setStyle("display", "block");
     
     worksheet.setView(el, function() {
 
