@@ -33,8 +33,7 @@ eight:" + canvasHeight + "px;";
     
     var knobStyle = "position:absolute; display:none; ";
     var knobWidth = 36, knobHeight = 36;
-    var knobEl = new Element("img", { style:knobStyle, src:"http://worrydream.com/ExplorableExplanations/Media/Filter\
-ParamsKnob.png", width:knobWidth, height:knobHeight });
+    var knobEl = new Element("img", { style:knobStyle, src:"img/WorryDream/FilterParamsKnob.png", width:knobWidth, height:knobHeight });
 
     el.grab(knobEl, "bottom");
 
@@ -117,14 +116,14 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
 //            console.log('touched down at ', knobX, ',', knobY);
             isDragging = true;
             didDrag = true;
-            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnobDrag.png");
+            knobEl.set("src", "img/WorryDream/FilterParamsKnobDrag.png");
             updateRolloverEffects();
         },
 
         touchDidMove: function (touches) {
             var obj = { };
 
-            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnob.png");
+            knobEl.set("src", "img/WorryDream/FilterParamsKnob.png");
 //            console.log(worksheet.getValue(xParameter));
             
             var newX = knobXAtMouseDown + touches.translation.x;
@@ -146,7 +145,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
 
         touchDidGoUp: function(touches) {
             isDragging = false;
-            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnob.png");
+            knobEl.set("src", "img/WorryDream/FilterParamsKnob.png");
 
             updateRolloverEffects();
         }
@@ -180,8 +179,7 @@ Tangle.controls.c_sliderKnob = function(el, worksheet) {
     // initialize knob
     var knobStyle = "position:absolute; display:none; ";
     var knobWidth = 36, knobHeight = 36;
-    var knobEl = new Element("img", { style:knobStyle, src:"http://worrydream.com/ExplorableExplanations/Media/Filter\
-ParamsKnob.png", width:knobWidth, height:knobHeight });
+    var knobEl = new Element("img", { style:knobStyle, src:"img/WorryDream/FilterParamsKnob.png", width:knobWidth, height:knobHeight });
     // add knob to page
     el.grab(knobEl, "bottom");
 
@@ -261,14 +259,14 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
 
             isDragging = true;
             didDrag = true;
-            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnobDrag.png");
+            knobEl.set("src", "img/WorryDream/FilterParamsKnobDrag.png");
             updateRolloverEffects();
         },
 
         touchDidMove: function (touches) {
             
             var obj = { };
-            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnob.png");
+            knobEl.set("src", "img/WorryDream/FilterParamsKnob.png");
             var newX = knobXAtMouseDown + touches.translation.x;
             // set new x
             obj[parameter] = newX;
@@ -279,7 +277,7 @@ ParamsKnob.png", width:knobWidth, height:knobHeight });
             
             isDragging = false;
             updateRolloverEffects();
-            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnob.png");
+            knobEl.set("src", "img/WorryDream/FilterParamsKnob.png");
         }
     });
     
@@ -342,7 +340,7 @@ Tangle.controls.c_adjustableNumber = function(el, worksheet) {
 
         touchDidGoDown: function (touches) {
             valueAtMouseDown = worksheet.getValue(el);
-            knobEl.set("src", "http://worrydream.com/ExplorableExplanations/Media/FilterParamsKnobDrag.png");
+            knobEl.set("src", "img/WorryDream/FilterParamsKnobDrag.png");
             isDragging = true;
             isAnyAdjustableNumberDragging = true;
             updateRolloverEffects();
